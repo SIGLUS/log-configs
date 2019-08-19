@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.3"
 
 services:
 
@@ -12,22 +12,11 @@ services:
     user: root
     networks:
       - elastic
-    configs:
-      - source: fb_config
-        target: /usr/share/filebeat/filebeat.yml
     volumes:
-      - filebeat:/usr/share/filebeat/data
+      - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - /var/run/docker.sock:/var/run/docker.sock
-      # This is needed for filebeat to load container log path as specified in filebeat.yml
       - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
-
-      # # This is needed for filebeat to load jenkins build log path as specified in filebeat.yml
-      # - /var/lib/docker/volumes/jenkins_home/_data/jobs/:/var/lib/docker/volumes/jenkins_home/_data/jobs/:ro
-
-      # This is needed for filebeat to load logs for system and auth modules
       - /var/log/:/var/log/:ro
-      # This is needed for filebeat to load logs for auditd module
-      # - /var/log/audit/:/var/log/audit/:ro
     environment:
       - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
       # - KIBANA_HOST=${KIBANA_HOST:-node1}
@@ -42,10 +31,3 @@ networks:
   elastic:
     external: true
     name: host
-
-volumes:
-  filebeat:
-
-configs:
-  fb_config:
-    file: $PWD/config/filebeat.yml
