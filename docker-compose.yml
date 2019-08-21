@@ -1,33 +1,33 @@
 version: "3.3"
-
 services:
-
-  # How to Tune Elastic Beats Performance: A Practical Example with Batch Size, Worker Count, and More
-  # https://www.elastic.co/blog/how-to-tune-elastic-beats-performance-a-practical-example-with-batch-size-worker-count-and-more?blade=tw&hulk=social
   filebeat:
-    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION:-7.1.1}
-    # https://github.com/docker/swarmkit/issues/1951
-    hostname: "{{.Node.Hostname}}-filebeat"
-    # Need to override user so we can access the log files, and docker.sock
+    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION:-7.3.0}
+    hostname: "${HOST_NAME}"
     user: root
-    networks:
-      - elastic
     volumes:
       - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
       - /var/log/:/var/log/:ro
     environment:
-      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-node1}
-      # - KIBANA_HOST=${KIBANA_HOST:-node1}
-      # - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME:-elastic}
-      # - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD:-changeme}
-    # disable strict permission checks
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - KIBANA_HOST=${KIBANA_HOST}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
     command: ["--strict.perms=false"]
-    deploy:
-      mode: global
-
-networks:
-  elastic:
-    external: true
-    name: host
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION:-7.3.0}
+    hostname: "${HOST_NAME}"
+    user: root
+    volumes:
+      - ./config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - KIBANA_HOST=${KIBANA_HOST}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+    command: ["--strict.perms=false", "-system.hostfs=/hostfs"]
