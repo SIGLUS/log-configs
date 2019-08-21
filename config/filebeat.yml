@@ -3,11 +3,6 @@ filebeat.config:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
 
-filebeat.modules:
-- module: nginx
-- module: docker
-- module: system
-
 processors:
 - add_host_metadata: ~
 
