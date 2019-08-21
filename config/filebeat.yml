@@ -6,6 +6,9 @@ filebeat.config:
 processors:
 - add_host_metadata: ~
 
+setup.kibana:
+  host: '${KIBANA_HOST}'
+
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
   username: '${ELASTICSEARCH_USERNAME:}'
