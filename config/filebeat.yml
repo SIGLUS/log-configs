@@ -1,8 +1,7 @@
-filebeat.config:
-  modules:
-  - module: nginx
-  - module: system
-  - module: docker
+filebeat.modules:
+- module: nginx
+- module: docker
+- module: system
 
 processors:
 - add_host_metadata: ~
