@@ -3,6 +3,7 @@ services:
   filebeat:
     image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION:-7.3.0}
     hostname: "${HOST_NAME}"
+    network_mode: "host"
     user: root
     volumes:
       - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml
@@ -18,6 +19,7 @@ services:
   metricbeat:
     image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION:-7.3.0}
     hostname: "${HOST_NAME}"
+    network_mode: "host"
     user: root
     volumes:
       - ./config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
