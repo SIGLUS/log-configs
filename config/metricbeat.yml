@@ -27,6 +27,9 @@ metricbeat.modules:
 processors:
   - add_cloud_metadata: ~
 
+setup.template:
+  name: "metric"
+  pattern: "metric-*"
 setup.ilm.enabled: false
 ilm.enabled: false
 
