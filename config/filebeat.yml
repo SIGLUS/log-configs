@@ -9,7 +9,16 @@ filebeat.autodiscover:
       hints.enabled: true
 
 processors:
-- add_host_metadata: ~
+- drop_fields:
+        fields: ["agent.ephemeral_id", "docker.container.labels.com_docker_compose_config-hash", "docker.container.labels.com_docker_compose_version", "docker.container.labels.com_docker_compose_oneoff", "ecs"]
+- rename:
+    fields:
+     - from: "docker.container.labels.com_docker_compose_service"
+       to: "ServiceName"
+     - from: "host.name"
+       to: "Environment"
+    ignore_missing: true
+    fail_on_error: true
 
 setup.kibana:
   host: '${KIBANA_HOST}'
