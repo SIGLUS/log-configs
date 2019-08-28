@@ -16,5 +16,6 @@ setup.kibana:
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
+  index: "%{[@metadata][beat]}-%{[@metadata][version]}-%{[agent.hostname]}%{+yyyy.MM.dd}"
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
