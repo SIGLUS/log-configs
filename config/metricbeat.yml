@@ -27,8 +27,11 @@ metricbeat.modules:
 processors:
   - add_cloud_metadata: ~
 
+setup.ilm.enabled: false
+ilm.enabled: false
+
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
-  index: "%{[@metadata][beat]}-%{[@metadata][version]}-%{[agent.hostname]}%{+yyyy.MM.dd}"
+  index: "%{[agent.type]}-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'

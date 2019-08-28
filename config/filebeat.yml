@@ -13,9 +13,15 @@ processors:
 
 setup.kibana:
   host: '${KIBANA_HOST}'
+setup.template:
+  name: "filebeat"
+  pattern: "filebeat-*"
+
+setup.ilm.enabled: false
+ilm.enabled: false
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
-  index: "%{[@metadata][beat]}-%{[@metadata][version]}-%{[agent.hostname]}%{+yyyy.MM.dd}"
+  index: "%{[agent.type]}-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
