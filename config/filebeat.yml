@@ -8,6 +8,10 @@ filebeat.autodiscover:
     - type: docker
       hints.enabled: true
 
+filebeat.modules:
+- module: nginx
+- module: system
+
 processors:
 - drop_fields:
         fields: ["agent.ephemeral_id", "docker.container.labels.com_docker_compose_config-hash", "docker.container.labels.com_docker_compose_version", "docker.container.labels.com_docker_compose_oneoff", "ecs"]
