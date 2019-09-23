@@ -7,6 +7,10 @@ Configurations locate at `/config` folder
 
 ## Set up:
 You should ssh into EC2 instance and clone this repo and run following script
-```sh
-./run.sh
-```
+
+
+1. change hostname for container
+`sed -i 's/$(hostname)/xx.siglus.us/g' run.sh`
+
+2. run , start services
+`./run.sh`
