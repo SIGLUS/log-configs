@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   filebeat:
-    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION:-7.3.0}
+    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION:-7.8.1}
     hostname: "${HOST_NAME}"
     network_mode: "host"
     user: root
@@ -17,7 +17,7 @@ services:
       - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
     command: ["--strict.perms=false"]
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION:-7.3.0}
+    image: docker.elastic.co/beats/metricbeat:${ELASTIC_VERSION:-7.8.1}
     hostname: "${HOST_NAME}"
     network_mode: "host"
     user: root

@@ -26,6 +26,7 @@ processors:
 
 setup.kibana:
   host: '${KIBANA_HOST}'
+
 setup.template:
   name: "filebeat"
   pattern: "filebeat-*"
