@@ -30,8 +30,13 @@ processors:
 setup.kibana:
   host: '${KIBANA_HOST}'
 
+setup.template:
+  name: "metricbeat"
+  pattern: "metricbeat-*"
+
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
+  # index name not work, issue: https://github.com/elastic/beats/issues/11866
   index: "%{[agent.type]}-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
