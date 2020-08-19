@@ -36,6 +36,6 @@ setup.template:
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
-  index: "%{[agent.type]}-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
+  index: "metricbeat-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
