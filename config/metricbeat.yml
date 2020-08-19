@@ -31,14 +31,12 @@ setup.kibana:
   host: '${KIBANA_HOST}'
 
 setup.template:
-  name: "metric"
-  pattern: "metric-*"
+  name: "metricbeat"
+  pattern: "metricbeat-*"
 
-setup.ilm.enabled: false
-ilm.enabled: false
+setup.ilm.pattern: "%{[agent.type]}-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOST:elasticsearch:9200}'
-  index: "%{[agent.type]}-%{[agent.version]}-%{[agent.hostname]}-%{+yyyy.MM.dd}"
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
